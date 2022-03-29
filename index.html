@@ -294,6 +294,21 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TheLanguage/" class="md-nav__link">
+        The language
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -389,7 +404,7 @@
 <h4 id="a-simple-language">📜 A simple language</h4>
 <ul>
 <li>Inspired by Renpy, author content in a syntax that is a joy to write in.</li>
-<li>Incredibly powerful and simple scripting system.</li>
+<li>Incredibly powerful yet simple. Mix scripting with manuscript on the fly.</li>
 <li>Text-based source file management.</li>
 </ul>
 <div class="highlight"><pre><span></span><code>George: Hello! how are you?
@@ -402,15 +417,16 @@
 <h4 id="a-beautiful-runtime">📜 A beautiful runtime</h4>
 <ul>
 <li>Games are demanding for performance. Thats why this runtime is natively written in zig ⚡, it features no garbage collection, minimal memory footprint, and puts you in charge of it's compute.</li>
-<li>Don't pay for what you don't use, the event system can be completely turned off.  Debug features can be stripped from production builds.</li>
+<li>Don't pay for what you don't use, the event system and debug features can be completely turned off.</li>
 <li>A lighting fast data oriented runtime with an ECS architecture, hot-reload scripts while you're playing.</li>
-<li>No dependencies. Other than the zig standard library, no messy dependencies are brought into your system.</li>
+<li>No dependencies. Other than a tiny static link to the zig standard library, no messy dependencies are brought into your system.</li>
 </ul>
 <h4 id="debugging-for-everyone">📜 Debugging for everyone</h4>
 <ul>
-<li>Get superpowers with the halcyon debugger. Debug game instances, step forward, and backwards, edit quest facts.</li>
-<li>Connect to remote instances via a debug server architecture.</li>
+<li>Full featured debugging. Debug game instances, step forward, and backwards, edit quest facts.</li>
+<li>Connect to remote instances via a debug server.</li>
 <li>Debug multiplayer sessions, save and load gamestates.</li>
+<li>Play and write at the same time, take seconds not hours to iterate.</li>
 </ul>
 <h4 id="quality-at-every-step-of-production">📜 Quality at every step of production</h4>
 <ul>
@@ -421,96 +437,19 @@
 </ul>
 <h4 id="seamless-integration-with-your-projects">📜 Seamless integration with your projects</h4>
 <ul>
-<li>Plugins and prebuilt asset packages for Unreal Engine and Unity, will be available through the asset store and marketplace respectively.</li>
+<li>Plugins and prebuilt packages for Unreal Engine and Unity will be available.</li>
 <li>Sane defaults and rich examples lets you get started with writing right away.</li>
 </ul>
 <h4 id="an-open-ecosystem">📜 An open ecosystem</h4>
 <ul>
-<li>Written in zig, a next-generation systems programming language that provides actual super powers, the runtime cross compiles for all modern systems including android, IOS and Consoles (bring your own sdk).</li>
-<li>The runtime and parser are entirely open source. Write your extensions and tools and have them be compiled natively.</li>
-<li>An open C Header API is published as well for you to write your own bindings.</li>
-<li>Write your own plugins and extensions onto the system, default distrobutions of the runtime come with the editor and the zig compiler.</li>
+<li>Written in zig, a next-generation systems programming language that provides actual super powers.</li>
+<li>The runtime cross compiles for all modern systems including android, IOS and Consoles (bring your own sdk if you got one).</li>
+<li>The runtime and parser are entirely open source.</li>
+<li>Bindings planned for more languages and frameworks.</li>
 </ul>
 <h3 id="development">Development</h3>
 <p>The tool is currently in development by just me, Peterino. I am an engine and tools developer who works in the AAA gamedev space and wanted to have an elegant solution for my personal projects that is comparable or better to the tools I am familiar with at work.</p>
 <p>The tool is undergoing heavy development and is not publically available (yet).</p>
-<h1 id="the-language">The language</h1>
-<p>The scripting language is loosely inspired by renpy. To declare a stream of dialogue, simply write it like thus.</p>
-<div class="highlight"><pre><span></span><code>PersonA: Hello! Great day isn&#39;t it?
-PersonB: Man.. I really hate the way you talk so nicely.
-PersonA: Haha you sure got me there! I really am a nice person.
-PersonB: Get the hell away from me.
-</code></pre></div>
-<p>Dialogues can be written with with just the format [Speaker] : [content]
-and each dialogue ends with a newline.</p>
-<div class="highlight"><pre><span></span><code>PersonA: This is a really long piece of dialogue 
-: So I can extend it like this
-</code></pre></div>
-<h3 id="conditionals">Conditionals</h3>
-<p>Single dialogue can be decorated with an if statement.</p>
-<div class="highlight"><pre><span></span><code>@if(PersonA_is_pissed)
-PersonA: I am pissed off
-PersonA: I will say this line regardless of if I&#39;m pissed off or not.
-</code></pre></div>
-<p>Groups of dialogues can be gated by a tab-indent statements.</p>
-<div class="highlight"><pre><span></span><code>@if(PersonA_is_pissed)
-    PersonA: I am really pissed off
-    PersonB: If you&#39;re pissed off so am I!
-PersonA: I will say this line regardless of if I&#39;m pissed off or not.
-</code></pre></div>
-<h3 id="variables">Variables</h3>
-<p>Variables are defined or imported at the top of each .halc file. with the <code>@vars</code> directive.</p>
-<div class="highlight"><pre><span></span><code>@vars(
-    import PersonA; # This imports the PersonA namespace 
-    # This defines a variable in the PersonA namespace
-    def PersonAIsPissed = false; 
-    # This defines a variable in the PersonA namespace
-    def PersonA.isPissed = false; 
-    # generally I&#39;d recommend having the character definition 
-    # wherever it is also defining all of it&#39;s variables
-
-    # if def for the same variable from a global namespace name
-    # is called more than once
-)
-</code></pre></div>
-<h4 id="namespaces">namespaces</h4>
-<div class="highlight"><pre><span></span><code>@vars{
-    namespace PersonA{ 
-        # this defines a namespace and can be accessed via a dot specifier.
-
-    };
-}
-</code></pre></div>
-<h4 id="characters">characters</h4>
-<p>To define a character, you declare it in a <code>@vars</code> like this.</p>
-<p>The <code>name</code> variable will be used for the speaker name.</p>
-<div class="highlight"><pre><span></span><code>@vars {
-    character PersonA { 
-        def name = &quot;I have a really long name&quot;; 
-    };
-}
-</code></pre></div>
-<h2 id="the-runtime">The Runtime</h2>
-<p><code>Warning, nerd stuff ahead!</code></p>
-<h4 id="language-runtime-in-detail">language runtime in detail</h4>
-<div class="highlight"><pre><span></span><code>@if(PersonA_is_pissed)
-PersonA: I am pissed off
-PersonA: I will say this line regardless of if I&#39;m pissed off or not.
-</code></pre></div>
-<pre class="mermaid"><code>graph TD;
-    A[PersonA: Hello! Great day..] --&gt; B[PersonB: Man.. I really..];
-    B--&gt;C[PersonA: Haha you sure got me..];
-    C--&gt;D[PersonB: Get the hell away from..];</code></pre>
-<div class="highlight"><pre><span></span><code>@if(PersonA_is_pissed)
-    PersonA: I am really pissed off.
-    PersonB: If you&#39;re pissed off so am I!
-PersonA: I will say this line regardless of if I&#39;m pissed off or not.
-</code></pre></div>
-<pre class="mermaid"><code>graph TD;
-    A[if] --&gt; B[PersonA: I am really pissed off..];
-    B --&gt; D[PersonB: If you're pissed off so am I!];
-    D --&gt; C[PersonB: I will say this..];
-    A --&gt; |else| C;</code></pre>
 
               
             </article>
@@ -520,6 +459,26 @@ PersonA: I will say this line regardless of if I&#39;m pissed off or not.
       </main>
       
         <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+      
+        
+        <a href="TheLanguage/" class="md-footer__link md-footer__link--next" aria-label="Next: The language" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              The language
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
